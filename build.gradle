@@ -12,6 +12,9 @@ repositories {
 dependencies {
     api 'org.springframework:spring-websocket:5.3.23'
 
+    //noinspection GradlePackageUpdate
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:1.6.10"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.4'
 
     //noinspection GradlePackageUpdate
