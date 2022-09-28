@@ -1,0 +1,14 @@
+# vim files
+*.swp
+*.*~
+*.un~
+
+# idea files
+.idea/
+
+# build files
+build/
+
+# gradle files
+.gradle/
+local.properties
