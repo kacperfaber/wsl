@@ -1,0 +1,3 @@
+@GlobalConfig [io.wsl] - indicates the class is GlobalConfig
+
+@Extension [io.wsl.extensions] - overrides @Component

@@ -1,0 +1,12 @@
+1. interface ExtensionComponent [io.wsl.extensions] - base class of all the extensions
+
+2. Kind of extensions:
+
+class ResultExtension [io.wsl.extensions] : Extension [io.wsl.extensions]
+
+class SecurityExtension [io.wsl.extensions] : Extension [io.wsl.extensions]
+
+3. intermediate models
+
+-) class ExtensionModel [io.wsl.extensions]
+   Made of instance of Annotation and Class<out ExtensionComponent>
