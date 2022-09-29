@@ -2,4 +2,4 @@ package io.wsl
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
-annotation class Handler()
+annotation class Handler(val path: String, val allowedOrigins: Array<String>, val isDefault: Boolean = false)
