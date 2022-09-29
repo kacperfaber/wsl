@@ -1,0 +1,74 @@
+1. All controllers must have a handler.
+
+2. Simple handler.
+
+'''
+
+@Handler("/route", ["*"])
+class SampleHandler {}
+
+'''
+
+3. You can set handler by...
+
+-) "Set Handler" [4.]
+-) "Default Handler In" [5.]
+-) "Default Handler" [6.]
+
+4. Set Handler
+
+Controller have a handler set.
+It has priority before "Default Handler" [6.] and "Default Handler In" [5.]
+
+-) Create a handler
+
+```
+@Handler("/route", ["*"])
+class SampleHandler {}
+```
+
+-) Set handler in controller [using @SetHandler annotation]
+
+```
+@SocketController
+@SetHandler(SampleHandler::class)
+class ExampleController {}
+```
+
+5. Default Handler In
+
+It applies the handler as default in selected packages.
+It has priority before 'Default Handler' [6.]
+
+-) Example handler class
+```
+@Handler
+@DefaultHandlerIn(packages=["io.wsl"])
+class SampleHandler
+```
+
+-) Example controller class
+```
+@SocketController
+class ExampleController
+```
+
+6. Default Handler
+
+Default Handler is handler annotated to be default. It will be used in situation when handler is not set in any other way.
+
+```
+
+@Handler("/route", ["*"])
+@DefaultHandler
+class DefaultHandler {}
+
+```
+
+7. Handler Instantiation
+
+Handler is a spring component.
+
+8. Events
+
+TODO
