@@ -2,13 +2,12 @@ package io.wsl.handlers
 
 import io.wsl.DefaultHandler
 import io.wsl.reflections.GenericAnnotationProvider
+import io.wsl.reflections.IsAnnotationPresentChecker
 import org.springframework.stereotype.Component
 
 @Component
-class DefaultHandlerClassIsDefaultHandlerChecker(var genericAnnotationProvider: GenericAnnotationProvider) : HandlerClassIsDefaultHandlerChecker {
+class DefaultHandlerClassIsDefaultHandlerChecker(var isAnnotationPresentChecker: IsAnnotationPresentChecker) : HandlerClassIsDefaultHandlerChecker {
     override fun check(clazz: Class<*>): Boolean {
-        // TODO: Can be replaced with 'IsAnnotationPresentChecker' [io.wsl.reflections]
-
-        return genericAnnotationProvider.provide(clazz, DefaultHandler::class.java) != null
+        return isAnnotationPresentChecker.isAnnotationPresent(clazz, DefaultHandler::class.java)
     }
 }
