@@ -1,3 +1,11 @@
 package io.wsl.handlers
 
-open class Handler(var path: String, var allowedOrigins: Array<String>, var isDefault: Boolean)
+import io.wsl.extensions.ExtensionModel
+
+open class Handler(
+    var path: String,
+    var allowedOrigins: Array<String>,
+    var isDefault: Boolean,
+    var clazz: Class<*>,
+    var extensions: List<ExtensionModel>
+)
