@@ -35,7 +35,7 @@ class SampleHandler {}
 class ExampleController {}
 ```
 
-5. Default Handler In
+5. Default Handler In [not implemented yet]
 
 It applies the handler as default in selected packages.
 It has priority before 'Default Handler' [6.]
