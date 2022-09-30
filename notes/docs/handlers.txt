@@ -72,3 +72,9 @@ Handler is a spring component.
 8. Events
 
 TODO
+
+9. Exceptions
+
+-) HandlerNotResolved [io.wsl.exceptions] - raises when the Handler set by @SetHandler annotation can't be found.
+
+-) DefaultHandlerNotSet [io.wsl.exceptions] - when "Default Handler" [6.] is wanted, but not set. [See 6. for situations when the "Default Handler" is wanted.]
