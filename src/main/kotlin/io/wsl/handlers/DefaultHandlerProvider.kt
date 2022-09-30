@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component
 class DefaultHandlerProvider(var arrayToListConverter: ArrayToListConverter, var classAnnotationsProvider: ClassAnnotationsProvider, var handlerGenerator: HandlerGenerator, var extensionModelsProvider: ExtensionModelsProvider, var handlerIsDefaultChecker: HandlerClassIsDefaultHandlerChecker) : HandlerProvider {
     override fun provide(clazz: Class<*>, handler: io.wsl.Handler): Handler {
         val isDefault = handlerIsDefaultChecker.check(clazz)
+
+        // TODO: Replace with functionality to do this 3 line automatically
         val allAnnotations = classAnnotationsProvider.provide(clazz)
         val allAnnotationsList = arrayToListConverter.convert(allAnnotations)
         val extensions = extensionModelsProvider.provide(allAnnotationsList)
