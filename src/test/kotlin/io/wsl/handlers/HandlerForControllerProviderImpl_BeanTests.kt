@@ -9,7 +9,6 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.mockito.kotlin.anyOrNull
@@ -81,15 +80,25 @@ class HandlerForControllerProviderImpl_BeanTests {
     }
 
     @ParameterizedTest
-    @MethodSource("classSource") // TODO: Finish it.
-    fun `provide calls handlerByClassProvider with class equals to setHandler given class`(setClass: KClass<*>) {
+    @MethodSource("classSource")
+    fun `provide calls handlerByClassProvider with class equals to setHandler given class`(setClass: Class<*>) {
         `when`(handlerProvider.provide(any(), any()))
-            .thenReturn(null)
+            .thenReturn(newHandler())
 
-        provider.provide(TestAnnotatedClass::class.java, setClass.java, listOf(), null)
+        provider.provide(TestAnnotatedClass::class.java, setClass, listOf(), null)
 
-        verify(handlerProvider).provide(any(), eq(setClass.java))
+        verify(handlerProvider).provide(any(), eq(setClass))
     }
 
-
+    companion object {
+        @JvmStatic
+        fun classSource(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(TestAnnotatedClass::class.java),
+                Arguments.of(HandlerAnnotatedClass::class.java),
+                Arguments.of(TestComponent::class.java),
+                Arguments.of(TestError::class.java)
+            )
+        }
+    }
 }
