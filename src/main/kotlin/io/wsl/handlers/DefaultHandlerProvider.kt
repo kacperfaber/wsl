@@ -1,22 +1,15 @@
 package io.wsl.handlers
 
-import io.wsl.ArrayToListConverter
-import io.wsl.extensions.ExtensionModelsProvider
-import io.wsl.reflections.ClassAnnotationsProvider
+import io.wsl.extensions.ExtensionsFromClassProvider
 import org.springframework.stereotype.Component
 
 @Component
-class DefaultHandlerProvider(var arrayToListConverter: ArrayToListConverter, var classAnnotationsProvider: ClassAnnotationsProvider, var handlerGenerator: HandlerGenerator, var extensionModelsProvider: ExtensionModelsProvider, var handlerIsDefaultChecker: HandlerClassIsDefaultHandlerChecker) : HandlerProvider {
+class DefaultHandlerProvider(var extensionsFromClassProvider: ExtensionsFromClassProvider, var handlerGenerator: HandlerGenerator, var handlerIsDefaultChecker: HandlerClassIsDefaultHandlerChecker) : HandlerProvider {
     override fun provide(clazz: Class<*>, handler: io.wsl.Handler): Handler {
         val isDefault = handlerIsDefaultChecker.check(clazz)
-
-        // TODO: Replace with functionality to do this 3 line automatically
-        val allAnnotations = classAnnotationsProvider.provide(clazz)
-        val allAnnotationsList = arrayToListConverter.convert(allAnnotations)
-        val extensions = extensionModelsProvider.provide(allAnnotationsList)
+        val extensions = extensionsFromClassProvider.provide(clazz)
 
         // TODO: Replace handler.path and handler.allowedOrigins with the dependencies to provide that data.
-
         return handlerGenerator.generate(handler.path, handler.allowedOrigins, isDefault, clazz, extensions)
     }
 }
