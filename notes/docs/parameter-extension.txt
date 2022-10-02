@@ -1,0 +1,11 @@
+1. "Parameter Extensions" are the same extensions that explained in 'extensions.txt'
+
+2. "Parameter Extensions" can be applied on parameters in 'Socket Action' method.
+
+3. "Parameter Extensions" must extend the 'ParameterExtensionComponent' [io.wsl.extensions] class.
+
+If not, 'InvalidExtensionComponentException' [io.wsl.exceptions] wsl will throw
+
+4. You can apply only one extension to one parameter.
+
+If there's more, wsl will throw a 'InvalidActionParameter' [io.wsl.exceptions]
