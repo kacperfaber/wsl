@@ -8,6 +8,6 @@ interface HandlerGenerator {
         allowedOrigins: Array<String>,
         isDefault: Boolean,
         clazz: Class<*>,
-        extensions: List<ExtensionModel>
+        extensions: MutableList<ExtensionModel>
     ): Handler
 }

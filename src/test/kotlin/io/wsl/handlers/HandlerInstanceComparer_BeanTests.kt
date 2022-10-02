@@ -21,20 +21,20 @@ class HandlerInstanceComparer_BeanTests {
 
     @Test
     fun `compare does not throw`() {
-        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, listOf())
+        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, mutableListOf())
         assertDoesNotThrow { comparer.compare(handler, handler) }
     }
 
     @Test
     fun `compare returns true if instance are the same`() {
-        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, listOf())
+        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, mutableListOf())
         assertTrue { comparer.compare(handler, handler) }
     }
 
     @Test
     fun `compare returns false if has other references`() {
-        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, listOf())
-        val anotherHandler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, listOf())
+        val handler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, mutableListOf())
+        val anotherHandler = Handler("", arrayOf(), false, TestAnnotatedClass::class.java, mutableListOf())
         assertFalse { comparer.compare(handler, anotherHandler) }
     }
 }

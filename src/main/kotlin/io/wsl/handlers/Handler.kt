@@ -7,5 +7,5 @@ open class Handler(
     var allowedOrigins: Array<String>,
     var isDefault: Boolean,
     var clazz: Class<*>,
-    var extensions: List<ExtensionModel>
+    var extensions: MutableList<ExtensionModel>
 )

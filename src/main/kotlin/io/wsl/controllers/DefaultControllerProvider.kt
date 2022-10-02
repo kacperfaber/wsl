@@ -11,7 +11,7 @@ class DefaultControllerProvider(var extensionsFromClassProvider: ExtensionsFromC
     override fun provide(clazz: Class<*>, socketController: SocketController, handlers: List<Handler>, defaultHandler: Handler?): Controller {
         val setHandlerClass = setHandlerValueProvider.provide(clazz)
         val handler = handlerForControllerProvider.provide(clazz, setHandlerClass, handlers, defaultHandler)
-        val extensions = extensionsFromClassProvider.provide(clazz)
+        val extensions = extensionsFromClassProvider.provide(clazz, handler.extensions)
 
         return Controller(clazz, handler, extensions)
     }

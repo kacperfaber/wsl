@@ -30,7 +30,7 @@ class HandlerForControllerProviderImpl_BeanTests {
     lateinit var handlerProvider: HandlerByClassProvider
 
     fun newHandler(): Handler {
-        return Handler("", arrayOf(), false, TestAnnotatedClass::class.java, listOf())
+        return Handler("", arrayOf(), false, TestAnnotatedClass::class.java, mutableListOf())
     }
 
     @Test
