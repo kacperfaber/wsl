@@ -1,6 +1,7 @@
 package io.wsl.extensions
 
 import io.wsl.ArrayToListConverter
+import io.wsl.ListBuilder
 import io.wsl.reflections.ClassAnnotationsProvider
 import org.springframework.stereotype.Component
 
@@ -10,5 +11,11 @@ class DefaultExtensionsFromClassProvider(var arrayToListConverter: ArrayToListCo
         val annotations = classAnnotationsProvider.provide(clazz)
         val annotationList = arrayToListConverter.convert(annotations)
         return extensionModelsProvider.provide(annotationList)
+    }
+
+    override fun provide(clazz: Class<*>, initialList: MutableList<ExtensionModel>): MutableList<ExtensionModel> {
+        val annotations = classAnnotationsProvider.provide(clazz)
+        val annotationList = arrayToListConverter.convert(annotations)
+        return extensionModelsProvider.provide(annotationList, initialList)
     }
 }
