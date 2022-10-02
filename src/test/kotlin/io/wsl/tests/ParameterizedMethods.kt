@@ -10,7 +10,7 @@ class ParameterizedMethods {
 
     companion object {
         fun getSingleIntParamMethod(): Method {
-            return ParameterizedMethods::class.java.getMethod("singleIntParam")
+            return ParameterizedMethods::class.java.methods.first {it.name == "singleIntParam"}
         }
     }
 }
