@@ -5,4 +5,4 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @Repeatable
-annotation class Append(val clazz: KClass<*>)
+annotation class Include(val clazz: KClass<*>)
