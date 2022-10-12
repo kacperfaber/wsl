@@ -1,4 +1,4 @@
-package io.wsl.cfg
+package io.wsl.globalcfg
 
 import io.wsl.BeanOrNullProvider
 import io.wsl.GlobalConfigClass
