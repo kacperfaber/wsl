@@ -12,8 +12,8 @@ class EventHandler_Tests {
     }
 
     @Test
-    fun `only target is ANNOTATION_CLASS`() {
-        assertOnlyAnnotationTargetIs(EventHandler::class.java, AnnotationTarget.ANNOTATION_CLASS)
+    fun `only target is FUNCTION`() {
+        assertOnlyAnnotationTargetIs(EventHandler::class.java, AnnotationTarget.FUNCTION)
     }
 
     @Test
