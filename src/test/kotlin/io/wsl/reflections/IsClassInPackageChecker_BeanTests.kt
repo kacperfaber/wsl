@@ -53,8 +53,8 @@ class IsClassInPackageChecker_BeanTests {
     @ParameterizedTest
     @Suppress("Junit5MalformedParameterized")
     @ValueSource(classes = [TestComponent::class, ParameterizedMethods::class, TestAnnotatedClass::class, TestError::class, WithMethodClass::class])
-    fun `ClassPackageNameProvider gets class equals to given`(clazz: KClass<*>) {
-        checker.check(clazz.java, "hello.world")
-        verify(packageNameProvider).provide(eq(clazz.java))
+    fun `ClassPackageNameProvider gets class equals to given`(clazz: Class<*>) {
+        checker.check(clazz, "hello.world")
+        verify(packageNameProvider).provide(eq(clazz))
     }
 }
