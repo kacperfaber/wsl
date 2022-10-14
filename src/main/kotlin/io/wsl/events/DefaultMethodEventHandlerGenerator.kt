@@ -5,7 +5,7 @@ import java.lang.reflect.Method
 
 @Component
 class DefaultMethodEventHandlerGenerator : MethodEventHandlerGenerator {
-    override fun generate(componentClass: Class<*>, method: Method): MethodEventHandler {
-        return MethodEventHandler(componentClass, method)
+    override fun generate(key: Class<*>, componentClass: Class<*>, method: Method): MethodEventHandler {
+        return MethodEventHandler(key, componentClass, method)
     }
 }

@@ -1,3 +1,3 @@
 package io.wsl.events
 
-open class BaseEventHandler
+open class BaseEventHandler(var key: Class<*>)
