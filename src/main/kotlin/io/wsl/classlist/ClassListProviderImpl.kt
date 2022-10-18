@@ -11,9 +11,6 @@ class ClassListProviderImpl(var classListFromClassesGenerator: ClassListFromClas
         val packages = packageToScanFromConfigProvider.provide(config)
         val reflections = reflectionsProvider.provide(packages)
         val classes = classesProvider.provide(reflections)
-
-        // TODO: Make ClassList with property 'Set<Class>' is performance-better.
-
         return classListFromClassesGenerator.generate(classes)
     }
 }
