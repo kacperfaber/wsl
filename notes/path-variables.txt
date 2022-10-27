@@ -1,0 +1,17 @@
+1. "Path Variable" is system to create advanced patterns in actions.
+
+2. "Path" it's string given as @SocketAction.name that contain at least one path-variable declaration.
+
+3. Path Variable Declaration:
+- must be in {}
+- must contain path-variable name.
+- must contain type:
+
+4a. Path Variable Declarations Types and how they will be converted into regex
+- string -> .+
+- int -> -?\d
+- pint -> \d
+- nint -> -\d
+- bool -> true|false
+- bin -> 0|1
+- float -> [0-9\.]+
