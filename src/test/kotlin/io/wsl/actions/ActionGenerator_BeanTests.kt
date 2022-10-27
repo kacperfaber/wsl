@@ -20,9 +20,11 @@ class ActionGenerator_BeanTests {
     @Autowired
     lateinit var generator: ActionGenerator
 
+    fun regex() = Regex("a")
+
     @Test
     fun `generate does not throw`() {
-        assertDoesNotThrow { generator.generate("name", WithMethodClass.annotatedMethod(), WithMethodClass::class.java, ParameterList(), mutableListOf()) }
+        assertDoesNotThrow { generator.generate("name", WithMethodClass.annotatedMethod(), WithMethodClass::class.java, ParameterList(), mutableListOf(), regex()) }
     }
 
     @Test
@@ -33,21 +35,21 @@ class ActionGenerator_BeanTests {
     @ValueSource(strings = ["test1", "ping", "sayHello", "world"])
     @ParameterizedTest
     fun `generate returns name equals to given`(expected: String) {
-        val res = generator.generate(expected, WithMethodClass.annotatedMethod(), WithMethodClass::class.java, ParameterList(), mutableListOf())
+        val res = generator.generate(expected, WithMethodClass.annotatedMethod(), WithMethodClass::class.java, ParameterList(), mutableListOf(), regex())
         assertEquals(expected, res.name)
     }
 
     @Test
     fun `generate returns method equals to given`() {
         val method = WithMethodClass.annotatedMethod()
-        val res = generator.generate("hello", method, WithMethodClass::class.java, ParameterList(), mutableListOf())
+        val res = generator.generate("hello", method, WithMethodClass::class.java, ParameterList(), mutableListOf(), regex())
         assertEquals(method, res.method)
     }
 
     @ParameterizedTest
     @MethodSource("classSource")
     fun `generate returns controllerClass equals to given`(clazz: Class<*>) {
-        val res = generator.generate("hello", WithMethodClass.annotatedMethod(), clazz, ParameterList(), mutableListOf())
+        val res = generator.generate("hello", WithMethodClass.annotatedMethod(), clazz, ParameterList(), mutableListOf(), regex())
         assertEquals(clazz, res.controllerClass)
     }
 
@@ -67,7 +69,7 @@ class ActionGenerator_BeanTests {
     fun `generate returns parameterList equals to given`() {
         val expected = ParameterList()
         val res = generator.generate("hello", WithMethodClass.annotatedMethod(), WithMethodClass::class.java,
-            expected, mutableListOf())
+            expected, mutableListOf(), regex())
         assertEquals(expected, res.parameterList)
     }
 
@@ -75,7 +77,15 @@ class ActionGenerator_BeanTests {
     fun `generate returns extensions equals to given`() {
         val expected = mutableListOf<ExtensionModel>()
         val res = generator.generate("hello", WithMethodClass.annotatedMethod(), WithMethodClass::class.java,
-            ParameterList(), expected)
+            ParameterList(), expected, regex())
         assertEquals(expected, res.extensions)
+    }
+
+    @Test
+    fun `generate returns pattern equals to given`() {
+        val e = regex()
+        val res = generator.generate("hello", WithMethodClass.annotatedMethod(), WithMethodClass::class.java,
+            ParameterList(), mutableListOf(), e)
+        assertEquals(e, res.pattern)
     }
 }

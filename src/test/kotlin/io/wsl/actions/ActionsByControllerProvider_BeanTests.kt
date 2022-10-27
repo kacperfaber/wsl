@@ -39,7 +39,7 @@ class ActionsByControllerProvider_BeanTests {
     }
     
     private fun exampleAction(): Action {
-        return Action(WithMethodClass.annotatedMethod(), HandlerAnnotatedClass::class.java, "", listOf(), ParameterList())
+        return Action(WithMethodClass.annotatedMethod(), HandlerAnnotatedClass::class.java, "", listOf(), ParameterList(), Regex(""))
     }
 
     @Test

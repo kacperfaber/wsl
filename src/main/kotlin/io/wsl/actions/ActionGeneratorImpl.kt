@@ -12,9 +12,10 @@ class ActionGeneratorImpl : ActionGenerator {
         method: Method,
         controllerClass: Class<*>,
         parameterList: ParameterList,
-        extensions: List<ExtensionModel>
+        extensions: List<ExtensionModel>,
+        pattern: Regex
     ): Action {
-        return Action(method, controllerClass, name, extensions, parameterList)
+        return Action(method, controllerClass, name, extensions, parameterList, pattern)
     }
 
 }
