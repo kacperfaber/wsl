@@ -9,9 +9,9 @@
 
 4a. Path Variable Declarations Types and how they will be converted into regex
 - string -> .+
-- int -> -?\d
-- pint -> \d
-- nint -> -\d
+- int -> \\+?\\-?\\d+
+- pint -> \d+
+- nint -> -\d+
 - bool -> true|false
 - bin -> 0|1
 - float -> [0-9\.]+
