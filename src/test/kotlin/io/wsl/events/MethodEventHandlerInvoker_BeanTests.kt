@@ -61,11 +61,10 @@ class MethodEventHandlerInvoker_BeanTests {
     @ParameterizedTest
     @MethodSource("classSource")
     fun `invoke calls beanProvider with componentClass value`(clazz: Class<*>) {
-        val componentClass = TestComponent::class.java
         `when`(beanProvider.provide(any<Class<*>>())).thenReturn(null)
-        try {invoker.invoke(5, componentClass, WithMethodClass.annotatedMethod())}
+        try {invoker.invoke(5, clazz, WithMethodClass.annotatedMethod())}
         catch(e: Exception) {}
-        verify(beanProvider).provide(componentClass)
+        verify(beanProvider).provide(clazz)
     }
 
     @Test
