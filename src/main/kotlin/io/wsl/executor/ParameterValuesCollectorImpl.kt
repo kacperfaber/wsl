@@ -8,10 +8,9 @@ import org.springframework.stereotype.Component
 
 @Component
 class ParameterValuesCollectorImpl(var parameterExtensionExecutor: ParameterExtensionExecutor) : ParameterValuesCollector {
-    override fun collect(controllerInstance: Any, parameterList: ParameterList, actionCall: ActionCall): Array<Any?> {
+    override fun collect(parameterList: ParameterList, actionCall: ActionCall): Array<Any?> {
         val parametersSize = parameterList.size
-        val array = arrayOfNulls<Any?>(parametersSize + 1)
-        array[0] = controllerInstance
+        val array = arrayOfNulls<Any?>(parametersSize)
         for (parameterIndex in 0..parametersSize) {
             val parameter = parameterList[parameterIndex]
             if (parameter.extension != null) {
