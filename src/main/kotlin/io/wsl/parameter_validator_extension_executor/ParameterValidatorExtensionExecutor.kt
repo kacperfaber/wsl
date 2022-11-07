@@ -5,5 +5,5 @@ import io.wsl.extensions.ExtensionComponent
 import io.wsl.model_state.ModelState
 
 interface ParameterValidatorExtensionExecutor {
-    fun execute(invokeParameter: InvokeParameter, modelState: ModelState, extensionComponentClass: Class<out ExtensionComponent>)
+    fun execute(invokeParameter: InvokeParameter, modelState: ModelState, extensionComponentClass: Class<out ExtensionComponent>, annotation: Annotation)
 }

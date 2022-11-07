@@ -11,10 +11,15 @@ import org.springframework.stereotype.Component
 @Component
 class ParameterValidatorExtensionExecutorImpl(var beanOrNullProvider: BeanOrNullProvider) : ParameterValidatorExtensionExecutor {
     @Suppress("UNCHECKED_CAST")
-    override fun execute(invokeParameter: InvokeParameter, modelState: ModelState, extensionComponentClass: Class<out ExtensionComponent>) {
+    override fun execute(
+        invokeParameter: InvokeParameter,
+        modelState: ModelState,
+        extensionComponentClass: Class<out ExtensionComponent>,
+        annotation: Annotation
+    ) {
         val bean = beanOrNullProvider.provide(extensionComponentClass as Class<out ParameterValidator>)
             ?: throw ExtensionComponentNotRegistered()
 
-        return bean.validate(invokeParameter, modelState)
+        return bean.validate(invokeParameter, modelState, annotation)
     }
 }
