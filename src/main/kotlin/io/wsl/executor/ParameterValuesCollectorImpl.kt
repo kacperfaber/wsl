@@ -13,6 +13,7 @@ class ParameterValuesCollectorImpl(var parameterExtensionExecutor: ParameterExte
         val array = arrayOfNulls<Any?>(parametersSize)
         for (parameterIndex in 0..parametersSize) {
             val parameter = parameterList[parameterIndex]
+            // TODO: Here, we getting value from ParameterExtension. What if they're more than one extension to get the value?
             if (parameter.extension != null) {
                 val extension = parameter.extension!!
                 @Suppress("UNCHECKED_CAST")
