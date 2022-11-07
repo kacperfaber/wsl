@@ -7,15 +7,18 @@ import io.wsl.sessions.Session
 import org.springframework.stereotype.Component
 
 @Component
-class SingleActionExecutorImpl(var methodInvoker: MethodInvoker, var actionCallProvider: ActionCallProvider, var controllerInstanceBeanProvider: ControllerInstanceBeanProvider, var parameterValuesCollector: ParameterValuesCollector) : SingleActionExecutor {
+class SingleActionExecutorImpl(var valueProvider: ArrayValueProvider, var methodInvoker: MethodInvoker, var actionCallProvider: ActionCallProvider, var controllerInstanceBeanProvider: ControllerInstanceBeanProvider, var invokeParameterListProvider: InvokeParameterListProvider) : SingleActionExecutor {
     override fun execute(action: Action, session: Session, messageName: String, messageData: String): ExecutionResult {
         val controllerInstance = controllerInstanceBeanProvider.provide(action.controllerClass)
         val actionCall = actionCallProvider.provide(controllerInstance, action.method)
-        val values = parameterValuesCollector.collect(action.parameterList, actionCall)
+        val invokeParameters = invokeParameterListProvider.collect(action.parameterList, actionCall)
+
+        // TODO: Make InvokeParameters validated.
 
         // TODO: Add PayloadExtension
 
-        val result = methodInvoker.invoke(action.method, controllerInstance, *values)
+        val values = valueProvider.provide(invokeParameters)
+        val result = methodInvoker.invoke(action.method, controllerInstance, values) // TODO: No values.
 
         // TODO: Add ResultException
 
