@@ -1,4 +1,4 @@
-package io.wsl.executor
+package io.wsl.invoke_parameter
 
 import io.wsl.extensions.ExtensionModel
 import org.springframework.stereotype.Component

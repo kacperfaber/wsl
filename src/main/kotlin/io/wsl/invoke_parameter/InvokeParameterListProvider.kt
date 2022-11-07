@@ -1,4 +1,4 @@
-package io.wsl.executor
+package io.wsl.invoke_parameter
 
 import io.wsl.action_call.ActionCall
 import io.wsl.parameters.ParameterList

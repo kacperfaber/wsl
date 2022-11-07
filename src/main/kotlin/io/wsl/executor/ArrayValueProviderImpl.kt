@@ -1,5 +1,6 @@
 package io.wsl.executor
 
+import io.wsl.invoke_parameter.InvokeParameter
 import org.springframework.stereotype.Component
 
 @Component

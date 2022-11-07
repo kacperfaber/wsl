@@ -2,6 +2,7 @@ package io.wsl.executor
 
 import io.wsl.action_call.ActionCallProvider
 import io.wsl.actions.Action
+import io.wsl.invoke_parameter.InvokeParameterListProvider
 import io.wsl.reflections.MethodInvoker
 import io.wsl.sessions.Session
 import org.springframework.stereotype.Component

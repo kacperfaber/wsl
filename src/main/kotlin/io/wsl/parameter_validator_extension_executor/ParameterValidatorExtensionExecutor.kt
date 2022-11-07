@@ -1,6 +1,6 @@
 package io.wsl.parameter_validator_extension_executor
 
-import io.wsl.executor.InvokeParameter
+import io.wsl.invoke_parameter.InvokeParameter
 import io.wsl.extensions.ExtensionComponent
 import io.wsl.model_state.ModelState
 
