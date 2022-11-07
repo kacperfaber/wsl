@@ -12,6 +12,7 @@ class DefaultExtensionModelFromParameterProvider(var arrayToListConverter: Array
         val annotationArray = annotationsProvider.provide(parameter)
         val annotationList = arrayToListConverter.convert(annotationArray)
         val extensions = extensionModelsProvider.provide(annotationList)
+        // TODO: I want to create new class like this, but it will return list of extensions...
         if (extensions.count() > 1) {
             throw InvalidActionParameter()
         }
