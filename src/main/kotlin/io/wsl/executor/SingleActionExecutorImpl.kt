@@ -4,19 +4,29 @@ import io.wsl.action_call.ActionCallProvider
 import io.wsl.actions.Action
 import io.wsl.extensions.ExtensionKind
 import io.wsl.extensions.ExtensionModelsByExtensionKindGrouper
-import io.wsl.extensions.ExtensionModelsByExtensionKindGrouperImpl
 import io.wsl.invoke_parameter.InvokeParameterListProvider
 import io.wsl.invoke_parameter.InvokeParametersValidator
 import io.wsl.model_state.ModelStateGenerator
 import io.wsl.post_extensions_executor.PostExtensionsExecutor
 import io.wsl.pre_extensions_executor.PreExtensionsExecutor
 import io.wsl.reflections.MethodInvoker
-import io.wsl.sessions.Session
 import org.springframework.stereotype.Component
+import org.springframework.web.socket.WebSocketSession
 
 @Component
-class SingleActionExecutorImpl(var preExtensionsExecutor: PreExtensionsExecutor, var extensionsGrouper: ExtensionModelsByExtensionKindGrouper, var postExtensionsExecutor: PostExtensionsExecutor, var modelStateGenerator: ModelStateGenerator, var invokeParametersValidator: InvokeParametersValidator, var valueProvider: ArrayValueProvider, var methodInvoker: MethodInvoker, var actionCallProvider: ActionCallProvider, var controllerInstanceBeanProvider: ControllerInstanceBeanProvider, var invokeParameterListProvider: InvokeParameterListProvider) : SingleActionExecutor {
-    override fun execute(action: Action, session: Session, messageName: String, messageData: String): ExecutionResult {
+class SingleActionExecutorImpl(
+    var preExtensionsExecutor: PreExtensionsExecutor,
+    var extensionsGrouper: ExtensionModelsByExtensionKindGrouper,
+    var postExtensionsExecutor: PostExtensionsExecutor,
+    var modelStateGenerator: ModelStateGenerator,
+    var invokeParametersValidator: InvokeParametersValidator,
+    var valueProvider: ArrayValueProvider,
+    var methodInvoker: MethodInvoker,
+    var actionCallProvider: ActionCallProvider,
+    var controllerInstanceBeanProvider: ControllerInstanceBeanProvider,
+    var invokeParameterListProvider: InvokeParameterListProvider
+) : SingleActionExecutor {
+    override fun execute(action: Action, session: WebSocketSession, messageName: String, messageData: String): ExecutionResult {
         val controllerInstance = controllerInstanceBeanProvider.provide(action.controllerClass)
         val actionCall = actionCallProvider.provide(controllerInstance, action.method)
         val invokeParameters = invokeParameterListProvider.collect(action.parameterList, actionCall)
