@@ -5,13 +5,13 @@ import io.wsl.extensions.ExtensionsFromClassProvider
 import org.springframework.stereotype.Component
 
 @Component
-class DefaultHandlerProvider(var extensionsFromClassProvider: ExtensionsFromClassProvider, var handlerGenerator: HandlerGenerator, var handlerIsDefaultChecker: HandlerClassIsDefaultHandlerChecker) : HandlerProvider {
+class DefaultHandlerProvider(var allowedOriginsProvider: HandlerAllowedOriginsProvider, var pathProvider: HandlerPathProvider, var extensionsFromClassProvider: ExtensionsFromClassProvider, var handlerGenerator: HandlerGenerator, var handlerIsDefaultChecker: HandlerClassIsDefaultHandlerChecker) : HandlerProvider {
     override fun provide(clazz: Class<*>, handler: io.wsl.Handler): Handler {
         val globalConfigExtensions = mutableListOf<ExtensionModel>() // TODO: There's no global config extensions.
         val isDefault = handlerIsDefaultChecker.check(clazz)
         val extensions = extensionsFromClassProvider.provide(clazz, globalConfigExtensions)
-
-        // TODO: Replace handler.path and handler.allowedOrigins with the dependencies to provide that data.
-        return handlerGenerator.generate(handler.path, handler.allowedOrigins, isDefault, clazz, extensions)
+        val path = pathProvider.provide(handler)
+        val allowedOrigins = allowedOriginsProvider.provide(handler)
+        return handlerGenerator.generate(path, allowedOrigins, isDefault, clazz, extensions)
     }
 }
