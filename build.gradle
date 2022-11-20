@@ -1,9 +1,22 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+
+    id 'maven-publish'
 }
 
 group = 'io.wsl'
 version = '1.0-SNAPSHOT'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
 
 repositories {
     mavenCentral()
@@ -13,6 +26,8 @@ dependencies {
     api 'org.springframework:spring-websocket:5.3.23'
 
     implementation 'org.reflections:reflections:0.10.2'
+    // TODO: Delete it after debug-tests.
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.7.4'
 
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
 
