@@ -1,13 +1,11 @@
 package io.wsl.model
 
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-
-// TODO: Cause's exceptions in tests, because in tests there's no GlobalConfig created.
+import org.springframework.context.annotation.*
 
 @Configuration
 open class WslModelBean {
     @Bean
+    @Conditional(GlobalConfigClassBeanRegistered::class)
     open fun getModelBean(wslModelProvider: WslModelProvider): WslModel {
         return wslModelProvider.provide()
     }
