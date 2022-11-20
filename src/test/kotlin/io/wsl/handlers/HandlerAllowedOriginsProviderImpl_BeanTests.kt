@@ -4,7 +4,7 @@ import io.wsl.tests.HandlerAnnotatedClass
 import io.wsl.tests.SpringTests
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import kotlin.test.assertEquals
+import kotlin.test.assertContentEquals
 import kotlin.test.assertNotNull
 
 @SpringTests
@@ -21,6 +21,6 @@ class HandlerAllowedOriginsProviderImpl_BeanTests {
 
     @Test
     fun `provide returns result equals to path allowedOrigins`() {
-        assertEquals(testHandler.allowedOrigins, allowedOriginsProvider.provide(testHandler))
+        assertContentEquals(testHandler.allowedOrigins, allowedOriginsProvider.provide(testHandler))
     }
 }
