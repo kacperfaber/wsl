@@ -41,7 +41,7 @@ class SingleActionExecutorImpl(
         }
 
         val values = valueProvider.provide(invokeParameters)
-        val result = methodInvoker.invoke(action.method, controllerInstance, values)
+        val result = methodInvoker.invoke(action.method, controllerInstance, *values)
 
         if (extensionsGrouped[ExtensionKind.PostAction] != null) {
             postExtensionsExecutor.execute(extensionsGrouped[ExtensionKind.PostAction]!!, actionCall, result)

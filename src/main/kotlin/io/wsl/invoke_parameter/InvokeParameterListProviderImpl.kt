@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component
 class InvokeParameterListProviderImpl(var invokeParameterProvider: InvokeParameterProvider, var singleActionParameterExtensionProvider: SingleActionParameterExtensionProvider, var parameterExtensionExecutor: ParameterExtensionExecutor) :
     InvokeParameterListProvider {
     override fun collect(parameterList: ParameterList, actionCall: ActionCall): List<InvokeParameter> = listBuilder {
-        val parametersSize = parameterList.size
-        for (parameterIndex in 0..parametersSize) {
-            val parameter = parameterList[parameterIndex]
+        // TODO: Convert to classic for, I made it like that because it's 19:00
 
+        parameterList.forEachIndexed {
+            index, parameter ->
             // TODO: There's a filter, GC deletes the list after firstOrNull be picked.
             val extension = singleActionParameterExtensionProvider.provide(parameter.extensions)
 

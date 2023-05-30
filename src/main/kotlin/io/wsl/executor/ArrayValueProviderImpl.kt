@@ -8,9 +8,13 @@ class ArrayValueProviderImpl : ArrayValueProvider {
     override fun provide(invokeParams: List<InvokeParameter>): Array<Any?> {
         val argSize = invokeParams.size
         val arr = arrayOfNulls<Any?>(argSize)
-        for (i in 0..argSize) {
-            arr[i] = invokeParams[i].value
+
+        // TODO: Convert to classic for, I made it like that because it's 19:00
+
+        invokeParams.forEachIndexed {
+            index, invokeParam -> arr[index] = invokeParams[index].value
         }
+
         return arr
     }
 }
