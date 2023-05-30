@@ -4,10 +4,7 @@ import io.wsl.*
 import io.wsl.action_call.ActionCall
 import io.wsl.actions.Action
 import io.wsl.actions.ActionsByHandlerGrouper
-import io.wsl.extensions.ExtensionKind
-import io.wsl.extensions.PostExtension
-import io.wsl.extensions.SetComponent
-import io.wsl.extensions.SetExtensionKind
+import io.wsl.extensions.*
 import io.wsl.model.WslModel
 import io.wsl.web_socket_handler.WebSocketHandlerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -34,11 +31,24 @@ class TestProject_GlobalConfig
 class TestProject_ChatHandler
 
 @Component
-class TestProject_ReturnStringComponent : PostExtension() {
+class TestProject_ReturnStringComponent() : PostExtension() {
     override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation) {
         println("Hello World! - User says: " + result!! as String)
-    }
 
+    }
+}
+
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+@SetComponent(componentClass = TestProject_ParamComp::class)
+@SetExtensionKind(ExtensionKind.ActionParameter)
+annotation class TestProject_Kacperek
+
+@Component
+class TestProject_ParamComp : ParameterExtension() {
+    override fun getValue(actionCall: ActionCall, parameterType: Class<*>, annotation: Annotation): Any? {
+        return "Kacperek<3"
+    }
 }
 
 @Controller
@@ -61,7 +71,8 @@ annotation class TestProject_ReturnString
 class TestProject_ChatController {
     @SocketAction("sh")
     @TestProject_ReturnString
-    fun sayHello(): String {
+    fun sayHello(@TestProject_Kacperek name: String): String {
+        println("Resolved name $name")
         return "Hello haha it works.!"
     }
 }
