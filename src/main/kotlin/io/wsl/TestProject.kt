@@ -5,6 +5,8 @@ import io.wsl.action_call.ActionCall
 import io.wsl.actions.Action
 import io.wsl.actions.ActionsByHandlerGrouper
 import io.wsl.extensions.*
+import io.wsl.json.ObjectJsonDeserializer
+import io.wsl.json.ObjectJsonSerializer
 import io.wsl.messages.messaging.MessagingService
 import io.wsl.model.WslModel
 import io.wsl.web_socket_handler.WebSocketHandlerFactory
@@ -60,21 +62,57 @@ class HttpController(var model: WslModel) {
     }
 }
 
+class ShPayload {
+    lateinit var name: String
+}
+
+@Component
+class TestProject_GetPropComponent(private val objectJsonDeserializer: ObjectJsonDeserializer) : ParameterExtension() {
+    override fun getValue(
+        actionCall: ActionCall,
+        parameterType: Class<*>,
+        annotation: Annotation,
+        session: WebSocketSession
+    ): Any? {
+        return objectJsonDeserializer.deserialize(actionCall.messageData, ShPayload::class.java).name
+    }
+}
+
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+@SetComponent(TestProject_GetPropComponent::class)
+@SetExtensionKind(ExtensionKind.ActionParameter)
+annotation class TestProject_GetProp(val property: String)
+
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @SetComponent(TestProject_ReturnStringComponent::class)
 @SetExtensionKind(ExtensionKind.PostAction)
 annotation class TestProject_ReturnString
 
+@Component
+class TestProject_ReturnJsonComp(val objectSerializer: ObjectJsonSerializer, val messagingService: MessagingService) : PostExtension() {
+    override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation, session: WebSocketSession) {
+        messagingService.send(session, (annotation as TestProject_ReturnJson).produces, result)
+    }
+}
+
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@SetComponent(TestProject_ReturnJsonComp::class)
+@SetExtensionKind(ExtensionKind.PostAction)
+annotation class TestProject_ReturnJson(val produces: String)
+
 @SocketController
 @Component
 @SetHandler(TestProject_ChatHandler::class)
 class TestProject_ChatController {
     @SocketAction("sh")
-    @TestProject_ReturnString
-    fun sayHello(@TestProject_Kacperek name: String): String {
-        println("Resolved name $name")
-        return "Hello haha it works.!"
+    @TestProject_ReturnJson("sh_response")
+    fun sayHello(@TestProject_Kacperek name: String, @TestProject_GetProp("name") bodyName: String): Map<String, String> {
+        println("Resolved name $name from parameter extension")
+        println("From body we got $bodyName")
+        return mapOf("from_ext" to name, "from_body" to bodyName)
     }
 }
 
