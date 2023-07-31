@@ -7,11 +7,12 @@ import io.wsl.listBuilder
 import io.wsl.parameter_extension_executor.ParameterExtensionExecutor
 import io.wsl.parameters.ParameterList
 import org.springframework.stereotype.Component
+import org.springframework.web.socket.WebSocketSession
 
 @Component
 class InvokeParameterListProviderImpl(var invokeParameterProvider: InvokeParameterProvider, var singleActionParameterExtensionProvider: SingleActionParameterExtensionProvider, var parameterExtensionExecutor: ParameterExtensionExecutor) :
     InvokeParameterListProvider {
-    override fun collect(parameterList: ParameterList, actionCall: ActionCall): List<InvokeParameter> = listBuilder {
+    override fun collect(parameterList: ParameterList, actionCall: ActionCall, session: WebSocketSession): List<InvokeParameter> = listBuilder {
         // TODO: Convert to classic for, I made it like that because it's 19:00
 
         parameterList.forEachIndexed {
@@ -24,7 +25,8 @@ class InvokeParameterListProviderImpl(var invokeParameterProvider: InvokeParamet
                 val componentClass = extension.componentClass as Class<out ParameterExtension>
                 val extensionResult = parameterExtensionExecutor.execute(
                     actionCall, parameter.type,
-                    componentClass, extension.annotation
+                    componentClass, extension.annotation,
+                    session = session
                 )
                 yield(invokeParameterProvider.provide(parameter.type, extensionResult, parameter.extensions))
             }

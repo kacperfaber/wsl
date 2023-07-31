@@ -29,7 +29,7 @@ class SingleActionExecutorImpl(
     override fun execute(action: Action, session: WebSocketSession, messageName: String, messageData: String): ExecutionResult {
         val controllerInstance = controllerInstanceBeanProvider.provide(action.controllerClass)
         val actionCall = actionCallProvider.provide(controllerInstance, action.method)
-        val invokeParameters = invokeParameterListProvider.collect(action.parameterList, actionCall)
+        val invokeParameters = invokeParameterListProvider.collect(action.parameterList, actionCall, session)
         val modelState = modelStateGenerator.generate()
 
         invokeParametersValidator.doValidation(invokeParameters, modelState)

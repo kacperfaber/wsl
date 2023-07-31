@@ -46,7 +46,7 @@ annotation class TestProject_Kacperek
 
 @Component
 class TestProject_ParamComp : ParameterExtension() {
-    override fun getValue(actionCall: ActionCall, parameterType: Class<*>, annotation: Annotation): Any? {
+    override fun getValue(actionCall: ActionCall, parameterType: Class<*>, annotation: Annotation, session: WebSocketSession): Any? {
         return "Kacperek<3"
     }
 }
