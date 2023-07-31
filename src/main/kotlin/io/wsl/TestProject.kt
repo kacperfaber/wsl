@@ -5,6 +5,7 @@ import io.wsl.action_call.ActionCall
 import io.wsl.actions.Action
 import io.wsl.actions.ActionsByHandlerGrouper
 import io.wsl.extensions.*
+import io.wsl.messages.messaging.MessagingService
 import io.wsl.model.WslModel
 import io.wsl.web_socket_handler.WebSocketHandlerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -31,10 +32,10 @@ class TestProject_GlobalConfig
 class TestProject_ChatHandler
 
 @Component
-class TestProject_ReturnStringComponent() : PostExtension() {
+class TestProject_ReturnStringComponent(private val messagingService: MessagingService) : PostExtension() {
     override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation, session: WebSocketSession) {
         println("Hello World! - User says: " + result!! as String)
-
+        messagingService.send(session, "user-says", result.toString())
     }
 }
 
