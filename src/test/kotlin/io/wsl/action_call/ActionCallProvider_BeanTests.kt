@@ -23,27 +23,43 @@ class ActionCallProvider_BeanTests {
     fun `provide does not throw`() {
         val method = ParameterizedMethods.getSingleIntParamMethod()
         val instance = Any()
-        assertDoesNotThrow { provider.provide(instance, method) }
+        assertDoesNotThrow { provider.provide(instance, method, "name", "{}") }
     }
 
     @Test
     fun `provide returns 'method' equals to given`() {
         val method = ParameterizedMethods.getSingleIntParamMethod()
         val instance = Any()
-        assertEquals(method, provider.provide(instance, method).method)
+        assertEquals(method, provider.provide(instance, method, "name", "{}").method)
     }
 
     @Test
     fun `provide returns 'controllerInstance' equals to given`() {
         val method = ParameterizedMethods.getSingleIntParamMethod()
         val instance = Any()
-        assertEquals(instance, provider.provide(instance, method).controllerInstance)
+        assertEquals(instance, provider.provide(instance, method, "name", "{}").controllerInstance)
     }
 
     @Test
     fun `provide returns empty 'parameters'`() {
         val method = ParameterizedMethods.getSingleIntParamMethod()
         val instance = Any()
-        assertTrue(provider.provide(instance, method).parameters.isEmpty())
+        assertTrue(provider.provide(instance, method, "name", "{}").parameters.isEmpty())
+    }
+
+    @Test
+    fun `provide returns 'messageName' equals to given`() {
+        val expected = "exp_name_123"
+        val method = ParameterizedMethods.getSingleIntParamMethod()
+        val instance = Any()
+        assertEquals(expected, provider.provide(instance, method, expected, "{}").messageName)
+    }
+
+    @Test
+    fun `provide returns 'messageData' equals to given`() {
+        val expected = "exp_data_123"
+        val method = ParameterizedMethods.getSingleIntParamMethod()
+        val instance = Any()
+        assertEquals(expected, provider.provide(instance, method, "name", expected).messageData)
     }
 }
