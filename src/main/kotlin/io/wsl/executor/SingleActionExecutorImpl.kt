@@ -37,14 +37,14 @@ class SingleActionExecutorImpl(
         val extensionsGrouped = extensionsGrouper.group(action.extensions)
 
         if (extensionsGrouped[ExtensionKind.PreAction] != null) {
-            preExtensionsExecutor.execute(extensionsGrouped[ExtensionKind.PreAction]!!, actionCall)
+            preExtensionsExecutor.execute(extensionsGrouped[ExtensionKind.PreAction]!!, actionCall, session)
         }
 
         val values = valueProvider.provide(invokeParameters)
         val result = methodInvoker.invoke(action.method, controllerInstance, *values)
 
         if (extensionsGrouped[ExtensionKind.PostAction] != null) {
-            postExtensionsExecutor.execute(extensionsGrouped[ExtensionKind.PostAction]!!, actionCall, result)
+            postExtensionsExecutor.execute(extensionsGrouped[ExtensionKind.PostAction]!!, actionCall, result, session)
         }
 
         // TODO: I have an idea - Some actions requires no errors, some will be called with errors. If there's more than one action to invoke,

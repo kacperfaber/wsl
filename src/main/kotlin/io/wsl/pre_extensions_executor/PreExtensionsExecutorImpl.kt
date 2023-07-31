@@ -6,17 +6,18 @@ import io.wsl.exceptions.ExtensionComponentNotRegistered
 import io.wsl.extensions.ExtensionModel
 import io.wsl.extensions.PreExtension
 import org.springframework.stereotype.Component
+import org.springframework.web.socket.WebSocketSession
 
 @Component
 class PreExtensionsExecutorImpl(var beanOrNullProvider: BeanOrNullProvider) : PreExtensionsExecutor {
 
     @Suppress("UNCHECKED_CAST")
-    override fun execute(onlyPreExtensions: List<ExtensionModel>, actionCall: ActionCall) {
+    override fun execute(onlyPreExtensions: List<ExtensionModel>, actionCall: ActionCall, session: WebSocketSession) {
         onlyPreExtensions.forEach {
             val bean = beanOrNullProvider.provide(it.componentClass as Class<out PreExtension>)
                 ?: throw ExtensionComponentNotRegistered()
 
-            bean.beforeInvoke(actionCall, it.annotation)
+            bean.beforeInvoke(actionCall, it.annotation, session)
         }
     }
 }

@@ -32,7 +32,7 @@ class TestProject_ChatHandler
 
 @Component
 class TestProject_ReturnStringComponent() : PostExtension() {
-    override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation) {
+    override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation, session: WebSocketSession) {
         println("Hello World! - User says: " + result!! as String)
 
     }
