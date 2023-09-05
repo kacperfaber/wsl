@@ -1,6 +1,11 @@
 # wsl
 
+[![build](https://github.com/kacperfaber/wsl/actions/workflows/build.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/build.yml)
+[![test](https://github.com/kacperfaber/wsl/actions/workflows/test.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/test.yml)
+
 ## Installation 
+
+> Actually not in maven repository...
 
 ### Installing (using Gradle)
 
