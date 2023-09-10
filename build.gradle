@@ -10,7 +10,7 @@ version = '1.0.0-beta.1'
 ext {
     groupId = "io.wsl"
     artifactId = "wsl"
-    verXD = "1.0.0-beta.1"
+    versionId = "1.0.0-beta.1"
 }
 
 publishing {
@@ -18,7 +18,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = rootProject.getProperties()["groupId"]
             artifactId = rootProject.getProperties()["artifactId"]
-            version = rootProject.getProperties()["version"]
+            version = rootProject.getProperties()["versionId"]
 
             pom {
                 name = 'wsl'
