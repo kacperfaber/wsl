@@ -5,16 +5,54 @@ plugins {
 }
 
 group = 'io.wsl'
-version = '1.0-SNAPSHOT'
+version = '1.0.0-beta.1'
+
+ext {
+    groupId = "io.wsl"
+    artifactId = "wsl"
+    verXD = "1.0.0-beta.1"
+}
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        gpr(MavenPublication) {
+            groupId = rootProject.getProperties()["groupId"]
+            artifactId = rootProject.getProperties()["artifactId"]
+            version = rootProject.getProperties()["version"]
+
+            pom {
+                name = 'wsl'
+                description = 'WebSocket MVC framework, based on Spring.'
+                url = 'https://www.github.com/kacperfaber/wsl'
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'https://www.github.com/kacperfaber/wsl/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'kacperfaber'
+                        name = 'Kacper Faber'
+                    }
+                }
+            }
+
+            from(components.java)
         }
     }
     repositories {
         mavenLocal()
+
+        maven {
+            name "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/kacperfaber/wsl")
+
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
     }
 }
 
