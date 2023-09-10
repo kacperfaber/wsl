@@ -1,10 +1,31 @@
 # wsl
 
+WebSocket MVC framework based on Spring.
+
 [![build](https://github.com/kacperfaber/wsl/actions/workflows/build.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/build.yml)
 [![test](https://github.com/kacperfaber/wsl/actions/workflows/test.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/test.yml)
 [![publish](https://github.com/kacperfaber/wsl/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/kacperfaber/wsl/actions/workflows/publish.yml)
 
-## Installation 
+### Functionality
+
+* Allows to create many well-separated endpoints inside one app.
+* Create custom extensions as annotations to do anything you want.
+* Create custom message formatter.
+* Based on Spring with all features that spring provides.
+* Open-Source
+
+### Power of extensions
+* Extensions are a powerful way to do anything you want.
+* Actions will override extensions declared in upper level - Controller, handler or entire app
+* You can add custom value to action invocation
+* In extensions you have access to current WebSocketSession.
+* Extensions are grouped in 3 categories
+  * Pre: Will run before action is called.
+  * Post: After action is called - you can use value that action returned.
+  * Parameter: Assigned to parameter in action, you can set parameter value.
+
+
+## Installation
 
 ### Installing (using Gradle)
 
@@ -30,12 +51,14 @@ implementation("io.wsl:wsl:1.0.0-beta.1")
 First add repository.
 
 ```xml
+
 <repository>
     <url>https://maven.pkg.github.com/kacperfaber/wsl</url>
 </repository>
 ```
 
 ```xml
+
 <dependency>
     <groupId>io.wsl</groupId>
     <artifactId>wsl</artifactId>
@@ -46,7 +69,8 @@ First add repository.
 ## Tutorial
 
 #### 1. Create GlobalConfig
-Create a class annotated with ```@GlobalConfig``` annotation. 
+
+Create a class annotated with ```@GlobalConfig``` annotation.
 You can define a prefix to scan using `@ScanPackage(prefix="")`
 
 ```kotlin
@@ -56,6 +80,7 @@ class MyGlobalConfig
 ```
 
 ##### 1.1 Create GlobalConfigClasses bean
+
 ```kotlin
 @Bean
 open fun classes(): GlobalConfigClass {
@@ -64,6 +89,7 @@ open fun classes(): GlobalConfigClass {
 ```
 
 #### 2. Create a handler
+
 Handler is a representation of endpoint. In **WSL** you can create many handlers, with many separated actions.
 
 ```kotlin
@@ -75,7 +101,9 @@ class ChatHandler
 ```
 
 #### 3. Create controllers
-Controllers in **WSL** are like in HTTP framework but they have no prefixes. **SocketController**'s have no prefixes, but contain an actions.
+
+Controllers in **WSL** are like in HTTP framework but they have no prefixes. **SocketController**'s have no prefixes,
+but contain an actions.
 Generally it's a spring components, so we can use all the spring container features we want.
 
 ```kotlin
@@ -93,6 +121,7 @@ class ChatController {
 > Remember to use **@Component** from spring, or any other way to register this object in spring container.
 
 #### 4. Assign controller to handler
+
 All controllers must be assigned to handler. They're 2 ways to do this...
 
 ##### 4.1. Using @SetHandler
@@ -106,7 +135,9 @@ class ExampleController
 ```
 
 ##### 4.2 Using @DefaultHandler
-**@DefaultHandler** annotation present on **Handler** will set the handler is default, and will be used when **Controller** has not @SetHandler annotation.
+
+**@DefaultHandler** annotation present on **Handler** will set the handler is default, and will be used when *
+*Controller** has not @SetHandler annotation.
 
 ```kotlin
 @Handler(/* ... */)
@@ -129,8 +160,9 @@ class HandlerNotResolved
 
 #### 5. Create extensions
 
-**WSL** has nothing to use, but you can get awesome results using extensions. 
-Extensions are spring components related with annotations, **WSL** is calling extensions when message is received and action is picked.
+**WSL** has nothing to use, but you can get awesome results using extensions.
+Extensions are spring components related with annotations, **WSL** is calling extensions when message is received and
+action is picked.
 
 ##### 5.1 PreExtension
 
@@ -154,22 +186,23 @@ Usage:
 
 ```kotlin
 @SocketController
-class ChatController { 
+class ChatController {
     @SocketAction("print_body")
     @UseBody
     fun printBody(body: Body) {
         println(body)
     }
-    
+
     // Our component will add optional instance before request,
     // which wsl use unless method takes.
-    
+
     // In this scenario we read the data from the message,
     // But we can do many things.
 }
 ```
 
 ##### 5.2 PostExtension
+
 Post Extensions will be invoked after the action (Method) is called.
 So, we can use what this method returned, and for example return this to the user.
 
@@ -181,10 +214,10 @@ annotation class Returns(val produces: String)
 class ReturnsComponent() : PostExtension() {
     override fun afterInvoke(actionCall: ActionCall, result: Any?, annotation: Annotation, session: WebSocketSession) {
         // we're using annotation instance to get some data. 
-        val produces = (annotation as Returns).produces 
-        
+        val produces = (annotation as Returns).produces
+
         val responseBody = Json().write(result)
-        
+
         // send message to the user.
         session.send(TextMessage("$produces: $responseBody"))
     }
@@ -192,13 +225,14 @@ class ReturnsComponent() : PostExtension() {
 ```
 
 Usage:
+
 ```kotlin
 @SocketController
-class ChatController { 
+class ChatController {
     @SocketAction("my_name")
     @Returns("your_name_is")
     fun whatsMyName(): String = "Kacper"
-    
+
     // Now this action will respond with "Kacper" always.
     // And this message will be send
     // to user who sent message 'my_name'
@@ -206,11 +240,12 @@ class ChatController {
 ```
 
 > Remember, the built-in way to send messages is dependency MessagingService ( ***from io.wsl.messages.messaging*** ).
-> 
+>
 > You can access this just like normal bean.
-> 
+>
 
 ##### 5.3 ParameterExtension
+
 Extension we use in parameters, these kinda extensions only set the property before action is invoked.
 
 ```kotlin
@@ -220,7 +255,12 @@ annotation class PrincipalId
 
 @Component
 class PrincipalIdComponent : ParameterExtension() {
-    override fun getValue(actionCall: ActionCall, parameterType: Class<*>, annotation: Annotation, session: WebSocketSession): Any? {
+    override fun getValue(
+        actionCall: ActionCall,
+        parameterType: Class<*>,
+        annotation: Annotation,
+        session: WebSocketSession
+    ): Any? {
         // We're using WebSocketSession instance to get principal.name
         return session.getPrincipal().getName()
     }
@@ -228,6 +268,7 @@ class PrincipalIdComponent : ParameterExtension() {
 ```
 
 Usage:
+
 ```kotlin
 @SocketController
 class ChatController {
@@ -235,7 +276,7 @@ class ChatController {
     fun whoAmI(@PrincipalId name: String) {
         // `name` is equal to principal id.
     }
-    
+
 }
 ```
 
@@ -243,53 +284,53 @@ class ChatController {
 
 **WSL** applies **PostExtension**s and **PreExtensions** to lower floors of WSL structure.
 
-1. **GlobalConfig**: 
-Extension applied in GlobalConfig will be in all **WSL** structure.
+1. **GlobalConfig**:
+   Extension applied in GlobalConfig will be in all **WSL** structure.
 
 2. **Handler**: Extension applied in Handler will be used in all controllers [then in actions], in whole handler.
 
 3. **SocketController**: Will apply extension to all SocketAction`s in this controller.
 
-Some example wrote in free style
+Some example I wrote in free style
 
 ```kotlin
 
 @GlobalConfig
 @A
-class Global 
+class Global
 
-    @Handler
-    @B
-    // @A: ChatHandler derives @A extension from GlobalConfig
-    class ChatHandler
+@Handler
+@B
+// @A: ChatHandler derives @A extension from GlobalConfig
+class ChatHandler
 
-        @SocketController
-        @D
-        // @A: From Global
-        // @B: From ChatHandler
-        class ChatController 
+@SocketController
+@D
+// @A: From Global
+// @B: From ChatHandler
+class ChatController
 
-            @SocketAction
-            @E
-            // @A: From GlobalConfig
-            // @B: From ChatHandler
-            fun sendMessage()
-            
-            // Finally: we have:
-            // @A, @B, @D, @E
+@SocketAction
+@E
+// @A: From GlobalConfig
+// @B: From ChatHandler
+fun sendMessage()
 
-    @Handler
-    @C
-    // @A: ChatHandler derives @A extension from GlobalConfig
-    class UserHandler
+// Finally: we have:
+// @A, @B, @D, @E
 
-        @SocketController
-        @Z
-        // @C: LoginController derives @A extension from GlobalConfig
-        // @C: LoginController derives @C extension from UserHandler
-        class LoginController
+@Handler
+@C
+// @A: ChatHandler derives @A extension from GlobalConfig
+class UserHandler
 
-        // Finally: All actions under LoginController have @A, @C, @Z
+@SocketController
+@Z
+// @C: LoginController derives @A extension from GlobalConfig
+// @C: LoginController derives @C extension from UserHandler
+class LoginController
+
+// Finally: All actions under LoginController have @A, @C, @Z
 
 ```
 
@@ -301,11 +342,17 @@ class Global
 @Configuration
 @EnableWebSocket
 @Import(WslSpringConfig::class)
-class ProjectConfigurer(val actionsByHandlerGrouper: ActionsByHandlerGrouper, val handlerFactory: WebSocketHandlerFactory, val wslModel: WslModel) : WebSocketConfigurer {
+class ProjectConfigurer(
+    val actionsByHandlerGrouper: ActionsByHandlerGrouper,
+    val handlerFactory: WebSocketHandlerFactory,
+    val wslModel: WslModel
+) : WebSocketConfigurer {
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
         val actionsGrouped = actionsByHandlerGrouper.group(wslModel.actions, wslModel.controllers, wslModel.handlers)
         wslModel.handlers.forEach {
-            val handler = handlerFactory.createHandler(actionsGrouped[it] ?: throw Exception("No Actions depends to handler " + it.clazz), it)
+            val handler = handlerFactory.createHandler(
+                actionsGrouped[it] ?: throw Exception("No Actions depends to handler " + it.clazz), it
+            )
             registry.addHandler(handler, it.path).setAllowedOriginPatterns(*it.allowedOrigins)
         }
     }
