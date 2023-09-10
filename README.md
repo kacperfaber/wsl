@@ -2,15 +2,21 @@
 
 [![build](https://github.com/kacperfaber/wsl/actions/workflows/build.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/build.yml)
 [![test](https://github.com/kacperfaber/wsl/actions/workflows/test.yml/badge.svg)](https://github.com/kacperfaber/wsl/actions/workflows/test.yml)
+[![publish](https://github.com/kacperfaber/wsl/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/kacperfaber/wsl/actions/workflows/publish.yml)
 
 ## Installation 
 
-> Actually not in maven repository...
-
 ### Installing (using Gradle)
 
-```groovy
+First add repository
 
+```groovy
+maven {
+    url = uri("https://maven.pkg.github.com/kacperfaber/wsl")
+}
+```
+
+```groovy
 // build.gradle
 implementation "io.wsl:wsl:1.0.0-beta.1"
 
@@ -21,14 +27,20 @@ implementation("io.wsl:wsl:1.0.0-beta.1")
 
 ### Installing (using Maven)
 
-```xml
+First add repository.
 
+```xml
+<repository>
+    <url>https://maven.pkg.github.com/kacperfaber/wsl</url>
+</repository>
+```
+
+```xml
 <dependency>
     <groupId>io.wsl</groupId>
     <artifactId>wsl</artifactId>
     <version>1.0.0-beta.1</version>
 </dependency>
-
 ```
 
 ## Tutorial
