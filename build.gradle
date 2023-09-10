@@ -1,7 +1,14 @@
+import com.github.jk1.license.render.*
+
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
-
     id 'maven-publish'
+    id 'com.github.jk1.dependency-license-report' version '1.17'
+}
+
+licenseReport {
+    outputDir = "$projectDir/licenses"
+    renderers = [new XmlReportRenderer('third-party-libs.xml', 'Back-End Libraries')]
 }
 
 group = 'io.wsl'

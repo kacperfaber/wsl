@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "html-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="topic.v2.xsd"  id="third-party-libs" title="Third Party Libraries">
+<chunk include-id="third-party-libs-tables">
+<chapter title="Back-End Libraries" id="Back-End_Libraries">
+<table>
+<tr><td>Project</td><td>Version</td><td>License</td></tr>
+<tr>
+<td>com.fasterxml.jackson:jackson-bom</td>
+<td>2.15.1</td>
+<td>No license information found</td>
+</tr>
+<tr>
+<td><a href='https://github.com/FasterXML/jackson'>com.fasterxml.jackson.core:jackson-annotations</a></td>
+<td>2.15.1</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/FasterXML/jackson-core'>com.fasterxml.jackson.core:jackson-core</a></td>
+<td>2.15.1</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/FasterXML/jackson'>com.fasterxml.jackson.core:jackson-databind</a></td>
+<td>2.15.1</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/FasterXML/jackson-module-kotlin'>com.fasterxml.jackson.module:jackson-module-kotlin</a></td>
+<td>2.15.1</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='http://findbugs.sourceforge.net/'>com.google.code.findbugs:jsr305</a></td>
+<td>3.0.2</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='http://www.javassist.org/'>org.javassist:javassist</a></td>
+<td>3.28.0-GA</td>
+<td><a href='http://www.mozilla.org/MPL/MPL-1.1.html'>MPL 1.1</a></td>
+</tr>
+<tr>
+<td><a href='http://www.jetbrains.org'>org.jetbrains:annotations</a></td>
+<td>13.0</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache Software License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://kotlinlang.org/'>org.jetbrains.kotlin:kotlin-reflect</a></td>
+<td>1.5.32</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://kotlinlang.org/'>org.jetbrains.kotlin:kotlin-stdlib</a></td>
+<td>1.6.10</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://kotlinlang.org/'>org.jetbrains.kotlin:kotlin-stdlib-common</a></td>
+<td>1.6.10</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://kotlinlang.org/'>org.jetbrains.kotlin:kotlin-stdlib-jdk7</a></td>
+<td>1.6.10</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://kotlinlang.org/'>org.jetbrains.kotlin:kotlin-stdlib-jdk8</a></td>
+<td>1.6.10</td>
+<td><a href='http://www.apache.org/licenses/LICENSE-2.0.txt'>The Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='http://github.com/ronmamo/reflections'>org.reflections:reflections</a></td>
+<td>0.10.2</td>
+<td><a href='http://www.wtfpl.net/'>WTFPL</a></td>
+</tr>
+<tr>
+<td><a href='http://www.slf4j.org'>org.slf4j:slf4j-api</a></td>
+<td>1.7.32</td>
+<td><a href='http://www.opensource.org/licenses/mit-license.php'>MIT License</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-aop</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-beans</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-context</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-core</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-expression</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-jcl</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-web</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+<tr>
+<td><a href='https://github.com/spring-projects/spring-framework'>org.springframework:spring-websocket</a></td>
+<td>5.3.23</td>
+<td><a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License, Version 2.0</a></td>
+</tr>
+</table>
+</chapter>
+</chunk>
+</topic>
